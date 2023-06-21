@@ -1,27 +1,41 @@
-cifs-utils
+# Needed for setting up a new Adept Ubuntu machine.
 apt-transport-https     
 build-essential
 ca-certificates     
+cifs-utils
 cloc
 curl
-git 
+dos2unix
+git
 git-lfs
 gnupg-agent     
 gpg 
+gqrx-sdr
 htop
 meld
+ncat
 neovim 
-net-tools
 netcat
+net-tools
 nload
 nmap
+# Need to figure out how to check if there's an Nvidia card installed.
+# nvidia-cuda-toolkit
 pandoc 
 pass
+#portaudio19-dev
+#portaudio19-doc
 python3-argcomplete
+python3-pip
+python3-venv
+qrencode
 rar
 rsync
+#rtl-433
+#rtl-sdr
 screen
-software-properties-common
+#software-properties-common
+speedtest-cli
 sqlite3
 steghide
 tcpdump
@@ -31,5 +45,3 @@ tomb
 tree
 uidmap 
 wget 
-speedtest-cli
-
