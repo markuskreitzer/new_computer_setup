@@ -9,7 +9,10 @@ set -x
 # Install required system packages.
 sudo apt update 
 sudo apt upgrade -y  
-sudo apt install -y curl build-essential uidmap git pandoc neovim apt-transport-https wget gpg 
+sudo apt install -y curl build-essential uidmap git pandoc neovim apt-transport-https wget gpg
+while read -r line; do
+    sudo apt install -y "$line"
+done < apt_packages.txt
 
 #############################################
 ## Install Docker and Docker-Compose
@@ -90,7 +93,12 @@ function install_ide {
 		code --install-extension $e
 	done
 }
+function install_rust {
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  source "$HOME"/.cargo/env
+}
 
+install_rust
 install_starship_hacknerdfont
 install_docker
 install_node
