@@ -1,0 +1,13 @@
+sccache
+exa
+bat
+zellij
+mprocs
+ripgrep
+irust
+bacon
+cargo-info
+ncspot
+porsmo
+speedtest-rs
+rtx-cli

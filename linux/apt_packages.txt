@@ -1,40 +1,36 @@
-# Needed for setting up a new Adept Ubuntu machine.
-apt-transport-https     
+# nvidia-cuda-toolkit
+apt-transport-https   
 build-essential
 ca-certificates     
 cifs-utils
 cloc
 curl
+curl 
 dos2unix
 git
+git 
 git-lfs
 gnupg-agent     
+gpg
 gpg 
 gqrx-sdr
 htop
 meld
 ncat
 neovim 
-netcat
 net-tools
+netcat
 nload
 nmap
-# Need to figure out how to check if there's an Nvidia card installed.
-# nvidia-cuda-toolkit
 pandoc 
 pass
-#portaudio19-dev
-#portaudio19-doc
 python3-argcomplete
 python3-pip
 python3-venv
 qrencode
 rar
 rsync
-#rtl-433
-#rtl-sdr
 screen
-#software-properties-common
 speedtest-cli
 sqlite3
 steghide
