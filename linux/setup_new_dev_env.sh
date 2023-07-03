@@ -44,6 +44,8 @@ function install_starship_hacknerdfont {
 function install_microk8s_ubuntu {
   echo "Install Microk8s"
 	sudo snap install microk8s --classic
+	sudo iptables -P FORWARD ACCEPT
+	sudo netfilter-persistent save
 	sudo snap alias microk8s.kubectl kubectl
 	sudo snap alias microk8s.kubectl kk 
 	sudo usermod -a -G microk8s $USER
@@ -52,11 +54,12 @@ function install_microk8s_ubuntu {
 	echo 'source <(kk completion bash | sed "s/kubectl/kk/g")' >> ~/.bashrc
 	echo 'source <(kubectl completion bash)' >> ~/.bashrc
 	microk8s inspect
-	cat >/etc/docker/daemon.json <<EOF
-{
-    "insecure-registries" : ["localhost:32000"] 
-}
+  cat << EOF | sudo tee /etc/docker/daemon.json
+  {
+      "insecure-registries" : ["localhost:32000"]
+  }
 EOF
+
   sudo microk8s status --wait-ready
 	sudo microk8s enable dashboard
   sudo microk8s enable ingress
