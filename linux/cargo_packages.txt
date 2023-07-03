@@ -1,4 +1,4 @@
-sccache
+# sccache
 exa
 bat
 zellij
@@ -7,7 +7,7 @@ ripgrep
 irust
 bacon
 cargo-info
-ncspot
-porsmo
-speedtest-rs
-rtx-cli
+# ncspot
+# porsmo
+# speedtest-rs
+# rtx-cli
