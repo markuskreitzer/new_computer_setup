@@ -13,7 +13,7 @@ CURL_CERT_IGNORE=' '
 function install_apt_dependencies {
     sudo DEBIAN_FRONTEND=noninteractive apt update -yq
     sudo DEBIAN_FRONTEND=noninteractive apt upgrade -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -yq
-    wget https://raw.githubusercontent.com/markuskreitzer/new_computer_setup/master/apt_packages.txt
+    wget https://raw.githubusercontent.com/markuskreitzer/new_computer_setup/master/linux/apt_packages.txt
     while read -r line; do
         sudo apt install -y "$line" || echo "Failed to install $line"
     done < <(grep -v -E "^\s*#" apt_packages.txt)
