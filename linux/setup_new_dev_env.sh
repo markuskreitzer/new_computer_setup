@@ -124,7 +124,8 @@ function install_brave_ubuntu {
 sudo DEBIAN_FRONTEND=noninteractive apt update -yq
 sudo DEBIAN_FRONTEND=noninteractive apt upgrade -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -yq
 sudo DEBIAN_FRONTEND=noninteractive apt autoremove -y
-read -r line "Reboot the system and rerun this script to load any new kernel updates. Press y to reboot. Press any other key to continue."
+echo "Reboot the system and rerun this script to load any new kernel updates. Press y to reboot. Press any other key to continue."
+read -r line
 if [ "$line" == "y" ]; then
   sudo reboot now
 fi
