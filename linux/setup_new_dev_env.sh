@@ -126,8 +126,9 @@ sudo DEBIAN_FRONTEND=noninteractive apt upgrade -o Dpkg::Options::="--force-conf
 sudo DEBIAN_FRONTEND=noninteractive apt autoremove -y
 echo "Reboot the system and rerun this script to load any new kernel updates. Press y to reboot. Press any other key to continue."
 read -r line
+
 if [ "$line" == "y" ]; then
-  sudo reboot now
+  sudo reboot
 fi
 
 install_apt_dependencies
