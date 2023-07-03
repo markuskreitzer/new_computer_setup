@@ -124,8 +124,10 @@ function install_brave_ubuntu {
 sudo DEBIAN_FRONTEND=noninteractive apt update -yq
 sudo DEBIAN_FRONTEND=noninteractive apt upgrade -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -yq
 sudo DEBIAN_FRONTEND=noninteractive apt autoremove -y
-read line "Reboot the system and rerun this script to load any new kernel updates. Press enter to continue."
-sudo reboot now
+read -r line "Reboot the system and rerun this script to load any new kernel updates. Press y to reboot. Press any other key to continue."
+if [ "$line" == "y" ]; then
+  sudo reboot now
+fi
 
 install_apt_dependencies
 install_rust
