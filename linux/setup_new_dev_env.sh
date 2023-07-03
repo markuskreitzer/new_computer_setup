@@ -102,7 +102,7 @@ function install_vscode_ubuntu {
 }
 
 function install_rust {
-  curl $CURL_CERT_IGNORE --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  curl $CURL_CERT_IGNORE --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   source "$HOME"/.cargo/env
   wget https://raw.githubusercontent.com/markuskreitzer/new_computer_setup/master/linux/cargo_packages.txt
   grep -v '^#' cargo_packages.txt | while IFS= read -r package
@@ -120,6 +120,10 @@ function install_brave_ubuntu {
     sudo apt install -y brave-browser
 }
 
+function install_speedtest {
+    curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
+    sudo apt-get install speedtest
+}
 
 sudo DEBIAN_FRONTEND=noninteractive apt update -yq
 sudo DEBIAN_FRONTEND=noninteractive apt upgrade -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -yq
@@ -136,8 +140,8 @@ install_starship_hacknerdfont
 install_docker_ubuntu
 install_microk8s_ubuntu
 install_pnpm_node
+install_speedtest
 
-#install_node_ubuntu
-#install_vscode_ubuntu
-#install_brave_ubuntu
+install_vscode_ubuntu
+install_brave_ubuntu
 

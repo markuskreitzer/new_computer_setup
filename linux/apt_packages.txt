@@ -1,26 +1,23 @@
 # nvidia-cuda-toolkit
 lsof
+libssl-dev
 apt-transport-https   
 build-essential
 ca-certificates     
 cifs-utils
 cloc
 curl
-curl 
 dos2unix
 git
-git 
 git-lfs
 gnupg-agent     
 gpg
-gpg 
-gqrx-sdr
+# gqrx-sdr
 htop
 meld
 ncat
 neovim 
 net-tools
-netcat
 nload
 nmap
 pandoc 
