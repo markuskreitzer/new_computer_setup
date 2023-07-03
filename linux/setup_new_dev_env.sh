@@ -37,7 +37,7 @@ function install_starship_hacknerdfont {
 	git clone "https://github.com/markuskreitzer/hack-font-ligature-nerd-font.git"
 	mkdir ~/.fonts || echo "$HOME/.fonts already exists! Continuing..."
 	cp hack-font-ligature-nerd-font/font/*.ttf ~/.fonts && rm -rf hack-font-ligature-nerd-font
-	curl "$CURL_CERT_IGNORE" -sS https://starship.rs/install.sh | sudo sh -
+	curl "$CURL_CERT_IGNORE" -sS https://starship.rs/install.sh | sudo sh -s -- --bin-dir /usr/local/bin
 	echo 'eval "$(starship init bash)"' >> ~/.bashrc
 }
 
