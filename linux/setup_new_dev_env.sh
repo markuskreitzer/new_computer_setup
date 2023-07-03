@@ -11,8 +11,8 @@ set -x
 CURL_CERT_IGNORE=' '
 
 function install_apt_dependencies {
-    sudo apt update
-    sudo apt upgrade -y
+    sudo DEBIAN_FRONTEND=noninteractive apt update -yq
+    sudo DEBIAN_FRONTEND=noninteractive apt upgrade -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -yq
     wget https://raw.githubusercontent.com/markuskreitzer/new_computer_setup/master/apt_packages.txt
     while read -r line; do
         sudo apt install -y "$line" || echo "Failed to install $line"
@@ -119,6 +119,13 @@ function install_brave_ubuntu {
     sudo apt update
     sudo apt install -y brave-browser
 }
+
+
+sudo DEBIAN_FRONTEND=noninteractive apt update -yq
+sudo DEBIAN_FRONTEND=noninteractive apt upgrade -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -yq
+sudo DEBIAN_FRONTEND=noninteractive apt autoremove -y
+read line "Reboot the system and rerun this script to load any new kernel updates. Press enter to continue."
+sudo reboot now
 
 install_apt_dependencies
 install_rust
