@@ -109,7 +109,7 @@ function install_rust {
   do
     cargo install "$package"
   done
-
+  rm cargo_packages.txt
 }
 
 function install_brave_ubuntu {
@@ -124,7 +124,10 @@ function install_speedtest {
     curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
     sudo apt-get install speedtest
 }
-
+function setup_aliases {
+  curl -s https://raw.githubusercontent.com/markuskreitzer/new_computer_setup/master/linux/aliases.txt > $HOME/.aliases
+  echo "source $HOME/.aliases" >> $HOME/.bashrc
+}
 sudo DEBIAN_FRONTEND=noninteractive apt update -yq
 sudo DEBIAN_FRONTEND=noninteractive apt upgrade -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -yq
 sudo DEBIAN_FRONTEND=noninteractive apt autoremove -y
@@ -144,4 +147,4 @@ install_speedtest
 
 install_vscode_ubuntu
 install_brave_ubuntu
-
+setup_aliases
