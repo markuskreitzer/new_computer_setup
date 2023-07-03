@@ -1,26 +1,27 @@
 #!/usr/bin/bash
 set -e
 set -x 
-
-# Uncomment here if you are running in an env that MITM's all traffic.
-#CURL_CERT_IGNORE=' -k '
-CURL_CERT_IGNORE=' '
-
 #
 # Copyright 2022 Markus Kreitzer, All Rights Reserved
 #
 # Install required system packages.
 
-function install_apt_dependencies(){
-    PACKAGES=$(grep -v -E "^\s*#" apt_packages.txt)
+# Uncomment here if you are running in an env that MITM's all traffic.
+#CURL_CERT_IGNORE=' -k '
+CURL_CERT_IGNORE=' '
+
+function install_apt_dependencies {
     sudo apt update
-    sudo apt upgrade -y  
-    sudo apt install -y $PACKAGES
+    sudo apt upgrade -y
+    wget https://raw.githubusercontent.com/markuskreitzer/new_computer_setup/master/apt_packages.txt
+    while read -r line; do
+        sudo apt install -y "$line" || echo "Failed to install $line"
+    done < <(grep -v -E "^\s*#" apt_packages.txt)
+    rm -f apt_packages.txt
     sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 100
 }
 
-
-function install_docker {
+function install_docker_ubuntu {
     echo "Install Docker and Docker-Compose"
     sudo apt-get remove docker docker-engine docker.io containerd runc || echo ""
 	curl $CURL_CERT_IGNORE -fsSL https://get.docker.com | bash - 
@@ -30,51 +31,53 @@ function install_docker {
 }
 
 function install_starship_hacknerdfont {
-    #############################################
-    echo "Install Starship and required fonts."
-    #############################################
+  #############################################
+  echo "Install Starship and required fonts."
+  #############################################
 	git clone "https://github.com/markuskreitzer/hack-font-ligature-nerd-font.git"
-	mkdir ~/.fonts || echo "~/.fonts already exists! Continuing..."
+	mkdir ~/.fonts || echo "$HOME/.fonts already exists! Continuing..."
 	cp hack-font-ligature-nerd-font/font/*.ttf ~/.fonts && rm -rf hack-font-ligature-nerd-font
-	curl $CURL_CERT_IGNORE -sS https://starship.rs/install.sh | sh - 
+	curl "$CURL_CERT_IGNORE" -sS https://starship.rs/install.sh | sudo sh -
 	echo 'eval "$(starship init bash)"' >> ~/.bashrc
 }
 
-function install_microk8s {
-    #############################################
-    echo "Install Microk8s"
-    #############################################
+function install_microk8s_ubuntu {
+  echo "Install Microk8s"
 	sudo snap install microk8s --classic
 	sudo snap alias microk8s.kubectl kubectl
 	sudo snap alias microk8s.kubectl kk 
 	sudo usermod -a -G microk8s $USER
 	sudo chown -f -R $USER ~/.kube || echo ".kube did not exist"
+	echo "Kubectl Auto Completion" >> ~/.bashrc
 	echo 'source <(kk completion bash | sed "s/kubectl/kk/g")' >> ~/.bashrc
-	microk8s inspect	
+	echo 'source <(kubectl completion bash)' >> ~/.bashrc
+	microk8s inspect
 	cat >/etc/docker/daemon.json <<EOF
 {
     "insecure-registries" : ["localhost:32000"] 
 }
 EOF
-	microk8s enable dashboard
-	microk8s enable dns
-    microk8s enable registry
-    microk8s enable istio
-	microk8s kubectl get all --all-namespaces
+  sudo microk8s status --wait-ready
+	sudo microk8s enable dashboard
+  sudo microk8s enable ingress
+	sudo microk8s enable dns
+  sudo microk8s enable registry
+  sudo microk8s enable istio
+	sudo microk8s kubectl get all --all-namespaces
 	#microk8s dashboard-proxy
 }
 
-function install_node {
+function install_node_ubuntu {
     echo "Install Node.js with yarn"
 	# update to newer version from: https://github.com/nodesource/distributions/blob/master/README.md#debinstall
 	curl $CURL_CERT_IGNORE -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - && sudo apt-get install -y nodejs
 	mkdir ~/.npm-global
-	npm config set prefix '~/.npm-global'
+	npm config set prefix "$HOME/.npm-global"
 	echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.profile
 	npm i -g pnpm yarn
 }
 
-function install_pnpm_node(){
+function install_pnpm_node {
     curl $CURL_CERT_IGNORE -fsSL https://get.pnpm.io/install.sh | sh -
     pnpm env use --global 16
     pnpm install -g yarn
@@ -82,8 +85,7 @@ function install_pnpm_node(){
     yarn --version
 }
 
-
-function install_vscode {
+function install_vscode_ubuntu {
     echo "Install IDE Stuff"
 	wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 	sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
@@ -102,6 +104,7 @@ function install_vscode {
 function install_rust {
   curl $CURL_CERT_IGNORE --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
   source "$HOME"/.cargo/env
+  wget https://raw.githubusercontent.com/markuskreitzer/new_computer_setup/master/linux/cargo_packages.txt
   grep -v '^#' cargo_packages.txt | while IFS= read -r package
   do
     cargo install "$package"
@@ -109,26 +112,7 @@ function install_rust {
 
 }
 
-function install_apt_dependencies(){
-    PACKAGES=$(grep -v -E "^\s*#" apt_packages.txt)
-    sudo apt update
-    sudo apt install -y $PACKAGES
-    sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 100
-}
-
-function install_microk8s_ubuntu(){
-    sudo snap install microk8s --classic --channel=1.27
-    microk8s status --wait-ready
-    microk8s enable dns
-    microk8s enable hostpath-storage
-    microk8s enable ingress 
-    microk8s enable dashboard
-    microk8s enable registry --size=40Gi
-    microk8s status --wait-ready
-    sudo snap alias microk8s.kubectl kubectl
-}
-
-function install_brave_ubuntu(){
+function install_brave_ubuntu {
     echo "Install Brave (Chrome Clone with less tracking)"
     sudo curl $CURL_CERT_IGNORE -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
     echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
@@ -136,11 +120,14 @@ function install_brave_ubuntu(){
     sudo apt install -y brave-browser
 }
 
-
+install_apt_dependencies
 install_rust
 install_starship_hacknerdfont
-install_docker
-install_node
-install_ide
-install_microk8s
+install_docker_ubuntu
+install_microk8s_ubuntu
+install_pnpm_node
+
+#install_node_ubuntu
+#install_vscode_ubuntu
+#install_brave_ubuntu
 

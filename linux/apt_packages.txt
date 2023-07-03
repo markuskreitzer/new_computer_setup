@@ -1,4 +1,5 @@
 # nvidia-cuda-toolkit
+lsof
 apt-transport-https   
 build-essential
 ca-certificates     
