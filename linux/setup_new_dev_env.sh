@@ -124,27 +124,69 @@ function install_speedtest {
     curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
     sudo apt-get install speedtest
 }
+
 function setup_aliases {
   curl -s https://raw.githubusercontent.com/markuskreitzer/new_computer_setup/master/linux/aliases.txt > $HOME/.aliases
   echo "source $HOME/.aliases" >> $HOME/.bashrc
 }
-sudo DEBIAN_FRONTEND=noninteractive apt update -yq
-sudo DEBIAN_FRONTEND=noninteractive apt upgrade -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -yq
-sudo DEBIAN_FRONTEND=noninteractive apt autoremove -y
-echo "Reboot the system and rerun this script to load any new kernel updates. Press y to reboot. Press any other key to continue."
-read -r line
-if [ "$line" == "y" ]; then
-  sudo reboot
+
+function install_basic_env {
+  install_apt_dependencies
+  install_starship_hacknerdfont
+}
+
+function install_containerization {
+  install_docker_ubuntu
+  install_microk8s_ubuntu
+}
+
+function check_options {
+for var in "$@"
+do
+  if [[ "$var" == *"--gui"* ]]; then
+    install_basic_env
+    install_vscode_ubuntu
+    install_brave_ubuntu
+  fi
+  if [[ "$var" == *"--rust"* ]]; then
+    install_basic_env
+    install_rust
+  fi
+
+  if [[ "$var" == *"--node"* ]]; then
+    install_basic_env
+    install_pnpm_node
+  fi
+  if [[ "$var" == *"--speedtest"* ]]; then
+    install_basic_env
+    install_speedtest
+  fi
+  if [[ "$var" == *"--containers"* ]]; then
+    install_basic_env
+    install_containerization
+ fi
+ if [[ "$var" == *"--help"* ]]; then
+   echo "Usage: $0 [ all ]
+    --containers: Install microk8s and docker
+    --rust: Install rust
+    --node: Install pnpm and node
+    --gui: Install GUI stuff like Brave and VSCode
+    --speedtest: Install speedtest"
+   exit 1
+ fi
+done
+}
+
+if [ "$1" == "all" ]; then
+  install_basic_env
+  install_containerization
+  install_rust
+  install_pnpm_node
+  install_speedtest
+  install_vscode_ubuntu
+  install_brave_ubuntu
+else
+  check_options "$@"
 fi
 
-install_apt_dependencies
-install_rust
-install_starship_hacknerdfont
-install_docker_ubuntu
-install_microk8s_ubuntu
-install_pnpm_node
-install_speedtest
-
-install_vscode_ubuntu
-install_brave_ubuntu
 setup_aliases
