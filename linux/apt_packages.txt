@@ -26,7 +26,7 @@ python3-argcomplete
 python3-pip
 python3-venv
 qrencode
-rar
+unrar-free
 rsync
 screen
 speedtest-cli
