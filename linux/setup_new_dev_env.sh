@@ -150,25 +150,23 @@ function check_options {
 for var in "$@"
 do
   if [[ "$var" == *"--gui"* ]]; then
-    install_basic_env
     install_vscode_ubuntu
     install_brave_ubuntu
   fi
-  if [[ "$var" == *"--rust"* ]]; then
+  if [[ "$var" == *"--base"* ]]; then
     install_basic_env
+  fi
+  if [[ "$var" == *"--rust"* ]]; then
     install_rust
   fi
 
   if [[ "$var" == *"--node"* ]]; then
-    install_basic_env
     install_pnpm_node
   fi
   if [[ "$var" == *"--speedtest"* ]]; then
-    install_basic_env
     install_speedtest
   fi
   if [[ "$var" == *"--containers"* ]]; then
-    install_basic_env
     install_containerization
  fi
  if [[ "$var" == *"--help"* ]]; then
