@@ -84,7 +84,7 @@ function install_pnpm_node {
     chmod +x install_pnpm.sh
     . ./install_pnpm.sh
     rm install_pnpm.sh
-    export PATH="$HOME/.pnpm-global/bin:$PATH"
+    export PATH="$HOME/.local/share/pnpm:$PATH"
     pnpm env use --global 16
     pnpm install -g yarn
     node --version
