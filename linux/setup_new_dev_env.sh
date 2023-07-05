@@ -134,6 +134,7 @@ function install_speedtest {
 function setup_aliases {
   curl -s https://raw.githubusercontent.com/markuskreitzer/new_computer_setup/master/linux/aliases.txt > $HOME/.aliases
   echo "source $HOME/.aliases" >> $HOME/.bashrc
+  echo "set -o vi" >> $HOME/.bashrc
 }
 
 function install_basic_env {
