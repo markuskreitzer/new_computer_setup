@@ -13,7 +13,7 @@ CURL_CERT_IGNORE=' '
 function install_apt_dependencies {
     sudo DEBIAN_FRONTEND=noninteractive apt update -yq
     sudo DEBIAN_FRONTEND=noninteractive apt upgrade -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -yq
-    wget https://raw.githubusercontent.com/markuskreitzer/new_computer_setup/master/linux/apt_packages.txt
+    wget -O apt_packages.txt "https://raw.githubusercontent.com/markuskreitzer/new_computer_setup/master/linux/apt_packages.txt"
     while read -r line; do
         sudo DEBIAN_FRONTEND=noninteractive apt install -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -yq "$line" || echo "Failed to install $line"
     done < <(grep -v -E "^\s*#" apt_packages.txt)
@@ -30,9 +30,7 @@ function install_docker_ubuntu {
 }
 
 function install_starship_hacknerdfont {
-  #############################################
   echo "Install Starship and required fonts."
-  #############################################
 	git clone "https://github.com/markuskreitzer/hack-font-ligature-nerd-font.git"
 	mkdir ~/.fonts || echo "$HOME/.fonts already exists! Continuing..."
 	cp hack-font-ligature-nerd-font/font/*.ttf ~/.fonts && rm -rf hack-font-ligature-nerd-font
@@ -127,6 +125,7 @@ function install_brave_ubuntu {
 }
 
 function install_speedtest {
+  # The standard speed test that comes with Linux doesn't perform well on speeds above 300 Mbps.
     curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
     sudo apt-get install speedtest
 }
@@ -182,7 +181,10 @@ do
 done
 }
 
-if [ "$1" == "all" ]; then
+# Curl is a dependency for everything so we'll just install it first.
+sudo DEBIAN_FRONTEND=noninteractive apt install -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -yq curl
+
+if [[ "$1" == *"--all"* ]]; then
   install_basic_env
   install_containerization
   install_rust

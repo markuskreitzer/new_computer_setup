@@ -29,7 +29,6 @@ qrencode
 unrar-free
 rsync
 screen
-speedtest-cli
 sqlite3
 steghide
 tcpdump
