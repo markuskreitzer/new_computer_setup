@@ -15,7 +15,7 @@ function install_apt_dependencies {
     sudo DEBIAN_FRONTEND=noninteractive apt upgrade -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -yq
     wget https://raw.githubusercontent.com/markuskreitzer/new_computer_setup/master/linux/apt_packages.txt
     while read -r line; do
-        sudo apt install -y "$line" || echo "Failed to install $line"
+        sudo DEBIAN_FRONTEND=noninteractive apt install -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -yq "$line" || echo "Failed to install $line"
     done < <(grep -v -E "^\s*#" apt_packages.txt)
     rm -f apt_packages.txt
     sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 100
@@ -27,7 +27,6 @@ function install_docker_ubuntu {
 	curl $CURL_CERT_IGNORE -fsSL https://get.docker.com | bash - 
 	sudo  su -c "curl $CURL_CERT_IGNORE -SL https://github.com/docker/compose/releases/download/v2.14.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose"
 	sudo usermod -a -G docker $USER
-	echo "Don't forget to update your /etc/docker/daemon.json file"
 }
 
 function install_starship_hacknerdfont {
@@ -37,15 +36,15 @@ function install_starship_hacknerdfont {
 	git clone "https://github.com/markuskreitzer/hack-font-ligature-nerd-font.git"
 	mkdir ~/.fonts || echo "$HOME/.fonts already exists! Continuing..."
 	cp hack-font-ligature-nerd-font/font/*.ttf ~/.fonts && rm -rf hack-font-ligature-nerd-font
-	curl "$CURL_CERT_IGNORE" -sS https://starship.rs/install.sh | sudo sh -s -- --bin-dir /usr/local/bin
+	curl "$CURL_CERT_IGNORE" -sS https://starship.rs/install.sh | sudo sh -s -- -y --bin-dir /usr/local/bin
 	echo 'eval "$(starship init bash)"' >> ~/.bashrc
 }
 
 function install_microk8s_ubuntu {
   echo "Install Microk8s"
 	sudo snap install microk8s --classic
-	sudo iptables -P FORWARD ACCEPT
-	sudo netfilter-persistent save
+	# sudo iptables -P FORWARD ACCEPT
+	# sudo netfilter-persistent save
 	sudo snap alias microk8s.kubectl kubectl
 	sudo snap alias microk8s.kubectl kk 
 	sudo usermod -a -G microk8s $USER
@@ -53,13 +52,13 @@ function install_microk8s_ubuntu {
 	echo "Kubectl Auto Completion" >> ~/.bashrc
 	echo 'source <(kk completion bash | sed "s/kubectl/kk/g")' >> ~/.bashrc
 	echo 'source <(kubectl completion bash)' >> ~/.bashrc
-	microk8s inspect
   cat << EOF | sudo tee /etc/docker/daemon.json
   {
       "insecure-registries" : ["localhost:32000"]
   }
 EOF
-
+  sudo systemctl restart docker.service
+	sudo microk8s inspect
   sudo microk8s status --wait-ready
 	sudo microk8s enable dashboard
   sudo microk8s enable ingress
@@ -81,7 +80,11 @@ function install_node_ubuntu {
 }
 
 function install_pnpm_node {
-    curl $CURL_CERT_IGNORE -fsSL https://get.pnpm.io/install.sh | sh -
+    curl $CURL_CERT_IGNORE -fsSL https://get.pnpm.io/install.sh -o install_pnpm.sh
+    chmod +x install_pnpm.sh
+    . ./install_pnpm.sh
+    rm install_pnpm.sh
+    export PATH="$HOME/.pnpm-global/bin:$PATH"
     pnpm env use --global 16
     pnpm install -g yarn
     node --version
