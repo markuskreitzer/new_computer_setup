@@ -114,6 +114,8 @@ function install_rust {
     cargo install "$package"
   done
   rm cargo_packages.txt
+  echo "alias cat='bat'" >> ~/.bashrc
+  echo "alias ls='exa'" >> ~/.bashrc
 }
 
 function install_brave_ubuntu {
