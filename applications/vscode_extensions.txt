@@ -1,0 +1,16 @@
+vscodevim.vim
+ms-vscode.vscode-typescript-next
+ms-vscode-remote.remote-containers
+redhat.vscode-yaml
+ms-azuretools.vscode-docker
+ms-kubernetes-tools.vscode-kubernetes-tools
+ms-python.isort
+ms-python.python
+ms-python.vscode-pylance
+ms-toolsai.jupyter
+ms-toolsai.jupyter-keymap
+ms-toolsai.jupyter-renderers
+ms-toolsai.vscode-jupyter-cell-tags
+ms-toolsai.vscode-jupyter-slideshow
+eamodio.gitlens
+Vue.vscode-typescript-vue-plugin
