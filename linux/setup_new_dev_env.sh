@@ -344,7 +344,7 @@ if [[ "$1" == *"--all"* ]]; then
   install_it_admin "apt_packages.it_admin.txt"
   install_containerization
   install_rust
-  install_pnpm_node
+  # install_pnpm_node
   install_speedtest
   install_vscode_ubuntu
   install_brave_ubuntu
