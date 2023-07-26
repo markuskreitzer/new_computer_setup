@@ -1,0 +1,6 @@
+compress-video
+gitkraken --classic
+multipass
+obsidian --classic
+postman
+slack

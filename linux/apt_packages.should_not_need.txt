@@ -1,0 +1,20 @@
+# Packages should be included by default with Ubuntu or packages we should not need
+coreutils                  # GNU core utilities
+gir1.2-goa-1.0             # GObject introspection data for the GNOME Online Accounts library
+grub2                      # GRand Unified Bootloader, version 2 (dummy package)
+grub2-common               # GRand Unified Bootloader (common files for version 2)
+libc6                      # GNU C Library: Shared libraries
+libclutter-1.0-dev         # Open GL based interactive canvas library (development files)
+libclutter-gst-3.0-dev     # Open GL based interactive canvas library GStreamer elements (development files)
+libclutter-gtk-1.0-dev     # Open GL based interactive canvas library GTK+ widget (development files)
+libgee-0.8-dev             # GObject based collection library development files
+libgtk-3-dev               # development files for the GTK+ library
+libwebkit2gtk-4.0-dev      # Web content engine library for GTK+ - development files
+linux-generic              # Complete Generic Linux kernel and headers
+linux-generic-hwe-22.04    # Complete Generic Linux kernel and headers (dummy transitional package)
+linux-oem-22.04            # Complete OEM Linux kernel and headers
+ppa-purge                  # disables a PPA and reverts to official packages
+software-properties-common # manage the repositories that you install software from (common)
+ubuntu-advantage-tools     # management tools for Ubuntu Advantage
+ubuntu-drivers-common      # Detect and install additional Ubuntu driver packages
+ubuntu-restricted-extras   # Commonly used restricted packages for Ubuntu
