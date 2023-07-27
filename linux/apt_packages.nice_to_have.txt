@@ -13,6 +13,7 @@ p7zip-full                  # 7z and 7za file archivers with high compression ra
 p7zip-rar                   # non-free rar module for p7zip
 pv                          # Shell pipeline element to meter data passing through
 ssh-askpass                 # under X, asks user for a passphrase for ssh-add
+sshpass                     # non-interactive ssh password auth
 terminator                  # multiple GNOME terminals in one window
 trash-cli                   # command line trashcan utility
 vlc-plugin-access-extra     # multimedia player and streamer (extra access plugins)
