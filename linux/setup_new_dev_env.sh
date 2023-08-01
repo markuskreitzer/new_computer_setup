@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 set -e
-set -x 
+#set -x 
 #
 # Copyright 2022 Markus Kreitzer, All Rights Reserved
 #
