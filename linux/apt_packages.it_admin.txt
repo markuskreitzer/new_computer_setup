@@ -1,0 +1,21 @@
+# Packages that may be useful from an IT standpoint
+# clamav         # Antivirus, Docker image available, Requires additional steps to configure, `sudo apt-get install clamav; sudo systemctl stop clamav-freshclam; sudo rm -f /var/log/clamav/freshclam.log.lock; sudo freshclam; sudo systemctl start clamav-freshclam;`
+# cubic          # Custom Ubuntu ISO creator, Requires additional PPA, Have script for installation if needed
+# etcher         # Appimage that requires several apt packages, Have a script for installation but not needed by team.
+# trivy          # Docker image available, Will prevent additional configuration when installing via apt, Have script for installation if needed
+ansible          # Automation tool
+clonezilla       # Backup tool
+fwupd            # Firmware updater
+genisoimage      # ISO creator
+gparted          # Partition editor
+libccid          # Smart card tools
+libfprint-2-tod1 # Fingerprint reader
+libpsclite-dev   # Smart card tools
+libusb-dev       # Smart card tools
+lsb-core         # Distribution info
+lsb-release      # Distribution info
+mkisofs          # ISO creator
+os-prober        # Detect other OSes
+pcsc-tools       # Smart card tools
+pcscd            # Smart card daemon
+qemu             # Virtualization

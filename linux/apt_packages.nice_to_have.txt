@@ -1,0 +1,24 @@
+# Packages that would be nice to have but don't prevent core development
+chrome-gnome-shell          # GNOME Shell extensions integration for web browsers
+cmake                       # cross-platform, open-source make system
+dconf-editor                # simple configuration storage system - graphical editor
+deborphan                   # program that can find unused packages, e.g. libraries
+flatpak                     # Application deployment framework for desktop apps
+gnome-shell-extension-prefs # Utility to manage GNOME Shell extensions
+gnome-shell-extensions      # Extensions to extend functionality of GNOME Shell
+ifupdown                    # high level tools to configure network interfaces
+locate                      # maintain and query an index of a directory tree
+ncdu                        # ncurses disk usage viewer
+p7zip-full                  # 7z and 7za file archivers with high compression ratio
+p7zip-rar                   # non-free rar module for p7zip
+pv                          # Shell pipeline element to meter data passing through
+ssh-askpass                 # under X, asks user for a passphrase for ssh-add
+sshpass                     # non-interactive ssh password auth
+terminator                  # multiple GNOME terminals in one window
+trash-cli                   # command line trashcan utility
+vlc-plugin-access-extra     # multimedia player and streamer (extra access plugins)
+xauth                       # X authentication utility
+xclip                       # command line interface to X selections (clipboard)
+xdotool                     # simulate (generate) X11 keyboard/mouse input events
+xserver-xorg-dev            # Xorg X server - development files
+xutils-dev                  # X Window System utility programs for development

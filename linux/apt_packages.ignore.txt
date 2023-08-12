@@ -1,0 +1,10 @@
+# Packages that may be useful elsewhere but aren't required for core development
+imagemagick      # Image manipulation programs
+openshot-qt      # Create and edit videos and movies
+python3-openshot # Create and edit videos and movies
+remmina          # remote desktop client for GNOME desktop environment
+screen           # terminal multiplexer with VT100/ANSI terminal emulation
+tiger-vnc-viewer # A TigerVNC viewer
+valac            # C# like language for the GObject system
+vinagre          # VNC client for GNOME desktop
+virt-viewer      # Virtual Machine Viewer
